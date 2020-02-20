@@ -29,6 +29,9 @@ database:
 
 #@ def uaa_config():
 #@overlay/match missing_ok=True
+encryption:
+  active_key_label: hardcoded-new-label
+#@overlay/match missing_ok=True
 scim:
   userids_enabled: true
   user:
