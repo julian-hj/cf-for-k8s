@@ -28,6 +28,36 @@ kind: Namespace
 metadata:
   name: docker-registry
 
+#! TODO: this gateway is needed why???
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: istio-ingressgateway
+  namespace: docker-registry
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - #@ "registry.{}".format(data.values.system_domain)
+    - #@ "*.registry.{}".format(data.values.system_domain)
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+  - hosts:
+    - #@ "registry.{}".format(data.values.system_domain)
+    - #@ "*.registry.{}".format(data.values.system_domain)
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      privateKey: /etc/istio/ingressgateway-certs/tls.key
+      serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
+
 #! expose docker-registry to allow nodes to pull images
 ---
 apiVersion: networking.istio.io/v1alpha3
@@ -39,10 +69,21 @@ spec:
   hosts:
   - #@ "registry." + data.values.system_domain
   gateways:
-  - #@ data.values.system_namespace + "/istio-ingressgateway"
+  - "docker-registry/istio-ingressgateway"
   http:
   - route:
     - destination:
         host: docker-registry.docker-registry.svc.cluster.local
         port:
           number: 5000
+
+#! fix docker registry service's port naming issue: https://discuss.istio.io/t/upstream-connect-error-or-disconnect-reset-before-headers-reset-reason-connection-termination/4434/4
+#@overlay/match by=overlay.subset({"kind":"Service", "metadata":{"name":"docker-registry"}})
+---
+spec:
+  #@overlay/replace
+  ports:
+  - name: http
+    protocol: TCP
+    port: 5000
+    targetPort: 5000
