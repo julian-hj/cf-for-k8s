@@ -34,6 +34,10 @@ log_cache_syslog:
   crt: #@ data.values.log_cache_syslog.crt
   key: #@ data.values.log_cache_syslog.key
 
+metric_proxy:
+  crt: #@ data.values.metric_proxy.crt
+  key: #@ data.values.metric_proxy.key
+
 client:
   id: #@ data.values.log_cache_client.id
   secret: #@ data.values.log_cache_client.secret
@@ -42,3 +46,13 @@ client:
 #@ logging = library.get("github.com/cloudfoundry/cf-k8s-logging")
 --- #@ template.replace(logging.with_data_values(logging_values()).eval())
 
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: metric-proxy-tls-certs
+  namespace: #@ data.values.system_namespace
+data:
+  tls.crt: #@ data.values.metric_proxy.crt
+  tls.key: #@ data.values.metric_proxy.key
+  tls.ca: #@ data.values.log_cache_ca.crt

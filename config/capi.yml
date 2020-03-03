@@ -47,6 +47,10 @@ eirini:
   serverCerts:
     secretName: eirini-internal-tls-certs
 
+metric_proxy:
+  serverCerts:
+    secretName: metric-proxy-tls-certs
+
 apiServer:
   opi:
     client_cert: #@ data.values.eirini.tls.crt
