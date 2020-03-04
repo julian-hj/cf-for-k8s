@@ -76,8 +76,8 @@ logging:
   max_retries: 1
 
 logcache:
-  host: #@ "https://metric-proxy.{}".format(data.values.system_domain)
-  port: 8080
+  host: metric-proxy
+  port: 8081
 
 logcache_tls:
   ca_file: "/config/metric_proxy/certs/tls.ca"
