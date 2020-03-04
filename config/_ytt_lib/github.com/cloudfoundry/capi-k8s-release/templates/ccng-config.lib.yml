@@ -48,7 +48,7 @@ nginx:
   instance_socket: "/data/cloud_controller_ng/cloud_controller.sock"
 
 index: 0
-name: TODO
+name: ""
 route_services_enabled: true
 volume_services_enabled: false
 
@@ -158,15 +158,18 @@ quota_definitions: {"default":{"memory_limit":102400,"non_basic_services_allowed
 default_quota_definition: default
 
 resource_pool:
-  resource_directory_key: cc-resources
+  resource_directory_key: #@ data.values.blobstore.resource_directory_key
   blobstore_type: fog
   fog_connection:
     provider: AWS
+
+    #@ if data.values.blobstore.endpoint:
     endpoint: #@ data.values.blobstore.endpoint
+    #@ end
     aws_access_key_id: #@ data.values.blobstore.access_key_id
     aws_secret_access_key: #@ data.values.blobstore.secret_access_key
     aws_signature_version: '2'
-    region: "''"
+    region: #@ data.values.blobstore.region
     path_style: true
   minimum_size: 65536
   maximum_size: 536870912
@@ -179,15 +182,17 @@ resource_pool:
   fog_aws_storage_options: {}
 
 packages:
-  app_package_directory_key: cc-packages
+  app_package_directory_key: #@ data.values.blobstore.package_directory_key
   blobstore_type: fog
   fog_connection:
     provider: AWS
+    #@ if data.values.blobstore.endpoint:
     endpoint: #@ data.values.blobstore.endpoint
+    #@ end
     aws_access_key_id: #@ data.values.blobstore.access_key_id
     aws_secret_access_key: #@ data.values.blobstore.secret_access_key
     aws_signature_version: '2'
-    region: "''"
+    region: #@ data.values.blobstore.region
     path_style: true
   max_valid_packages_stored: 5
   max_package_size: 1073741824
@@ -200,15 +205,17 @@ packages:
   fog_aws_storage_options: {}
 
 droplets:
-  droplet_directory_key: cc-droplets
+  droplet_directory_key: #@ data.values.blobstore.droplet_directory_key
   blobstore_type: fog
   fog_connection:
     provider: AWS
+    #@ if data.values.blobstore.endpoint:
     endpoint: #@ data.values.blobstore.endpoint
+    #@ end
     aws_access_key_id: #@ data.values.blobstore.access_key_id
     aws_secret_access_key: #@ data.values.blobstore.secret_access_key
     aws_signature_version: '2'
-    region: "''"
+    region: #@ data.values.blobstore.region
     path_style: true
 
   cdn:
@@ -220,15 +227,17 @@ droplets:
   max_staged_droplets_stored: 5
 
 buildpacks:
-  buildpack_directory_key: cc-buildpacks
+  buildpack_directory_key: #@ data.values.blobstore.buildpack_directory_key
   blobstore_type: fog
   fog_connection:
     provider: AWS
+    #@ if data.values.blobstore.endpoint:
     endpoint: #@ data.values.blobstore.endpoint
+    #@ end
     aws_access_key_id: #@ data.values.blobstore.access_key_id
     aws_secret_access_key: #@ data.values.blobstore.secret_access_key
     aws_signature_version: '2'
-    region: "''"
+    region: #@ data.values.blobstore.region
     path_style: true
 
   cdn:
@@ -339,6 +348,19 @@ perm:
 
 max_labels_per_resource: 50
 max_annotations_per_resource: 200
+
+default_app_lifecycle: kpack
+
+#! kpack stager properties
+kubernetes:
+  host_url: #@ data.values.kubernetes.api.url
+  service_account:
+    token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+  ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  kpack:
+    builder_namespace: #@ data.values.namespace
+    registry_service_account_name: cc-kpack-registry-service-account
+    registry_tag_base: #@ "{}/{}".format(data.values.kpack.registry.hostname, data.values.kpack.registry.repository)
 
 #! worker property
 perform_blob_cleanup: true

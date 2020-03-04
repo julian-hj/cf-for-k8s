@@ -41,6 +41,11 @@ system_certificate:
 
 capi:
   blobstore:
+    package_directory_key: cc-packages
+    droplet_directory_key: cc-droplets
+    resource_directory_key: cc-resources
+    buildpack_directory_key: cc-buildpacks
+    region: "''"
     endpoint: "http://cf-blobstore-minio.cf-blobstore.svc.cluster.local:9000"
   database:
     #! or mysql2, as needed

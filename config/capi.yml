@@ -31,8 +31,13 @@ app_domains:
 
 blobstore:
   endpoint: #@ data.values.capi.blobstore.endpoint
+  region: #@ data.values.capi.blobstore.region
   access_key_id: #@ data.values.cf_blobstore.access_key
   secret_access_key: #@ data.values.cf_blobstore.secret_key
+  package_directory_key: #@ data.values.capi.blobstore.package_directory_key
+  droplet_directory_key: #@ data.values.capi.blobstore.droplet_directory_key
+  resource_directory_key: #@ data.values.capi.blobstore.resource_directory_key
+  buildpack_directory_key: #@ data.values.capi.blobstore.buildpack_directory_key
 
 ccdb:
   adapter: #@ data.values.capi.database.adapter
