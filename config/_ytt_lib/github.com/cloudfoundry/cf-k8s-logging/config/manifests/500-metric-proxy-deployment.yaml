@@ -23,10 +23,10 @@ spec:
         image: #@ data.values.images.metric_proxy
         imagePullPolicy: Always
         ports:
-        - containerPort: 8081
+        - containerPort: 8080
         env:
         - name: ADDR
-          value: :8081
+          value: :8080
         - name: APP_SELECTOR
           value: cloudfoundry.org/app_guid
         - name: NAMESPACE

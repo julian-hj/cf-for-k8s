@@ -77,7 +77,7 @@ logging:
 
 logcache:
   host: metric-proxy
-  port: 8081
+  port: 8080
 
 logcache_tls:
   ca_file: "/config/metric_proxy/certs/tls.ca"
@@ -339,8 +339,6 @@ perm:
 
 max_labels_per_resource: 50
 max_annotations_per_resource: 200
-
-default_app_lifecycle: kpack
 
 #! worker property
 perform_blob_cleanup: true

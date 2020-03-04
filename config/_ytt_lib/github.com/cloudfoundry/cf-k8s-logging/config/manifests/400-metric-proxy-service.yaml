@@ -10,4 +10,5 @@ spec:
     app: metric-proxy
   ports:
     - protocol: TCP
-      port: 8081
+      port: 8080
+      name: https

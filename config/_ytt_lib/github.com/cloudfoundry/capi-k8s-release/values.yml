@@ -7,6 +7,10 @@ images:
   nginx: nginx:latest
 namespace: cf-system
 
+nginx:
+  image:
+    repository: "nginx"
+    tag: latest
 imagePullSecrets:
 
 app_domains: []

@@ -18,4 +18,4 @@ if [[ ! -r "${cf_install_values_path}" ]]; then
 fi
 
 # Deploy CF for Kubernetes
-kapp deploy -a cf -f <(ytt -f "${CONFIG_DIR}" -f "${cf_install_values_path}") -y
+kapp deploy -a cf -f <(ytt -f "${CONFIG_DIR}" -f "${cf_install_values_path}") -y -n default
