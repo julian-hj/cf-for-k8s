@@ -5,8 +5,9 @@ replicaCount: 1
 images:
   ccng: cloudfoundry/capi:sa-token
   nginx: cloudfoundry/capi:nginx
-namespace: cf-system
-
+  capi_kpack_watcher: cloudfoundry/capi-kpack-watcher:latest
+system_namespace: cf-system
+workloads_namespace: cf-workloads
 imagePullSecrets:
 
 app_domains: []
@@ -35,6 +36,8 @@ uaa:
     secretName:
   clients:
     cloud_controller_username_lookup:
+      secret: supers3cret
+    capi_kpack_watcher:
       secret: supers3cret
 
 eirini:
