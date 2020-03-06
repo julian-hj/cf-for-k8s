@@ -102,6 +102,12 @@ var _ = Describe("Smoke Tests", func() {
 				cfTail := cf.Cf("tail", appName, "--lines", "1000")
 				return string(cfTail.Wait().Out.Contents())
 			}).Should(ContainSubstring("Hello World from index"))
+
+			By("That the application's metrics are available.")
+			Eventually(func() string {
+				cfApp := cf.Cf("app", appName)
+				return string(cfApp.Wait().Out.Contents())
+			}).Should(ContainSubstring("cpu"))
 		})
 	})
 })

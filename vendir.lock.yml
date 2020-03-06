@@ -18,7 +18,12 @@ directories:
       sha: 8ec400d0d457862b78a19a59322c439ef51835e9
     path: github.com/cloudfoundry/cf-k8s-logging
   - git:
-      commitTitle: Reduce the number of env vars used by UAA
+      commitTitle: We need the key for the metric proxy cert or else K8s secret object
+        isn't happy...
+      sha: 177c1281f8f1acc64ca2435b18e50a9c3200261c
+    path: github.com/cloudfoundry/metric-proxy
+  - git:
+      commitTitle: Reduce the number of env vars used by UAA...
       sha: 1c19ffc2697441824d2e98e31210a82e1fbc0ac1
     path: github.com/cloudfoundry/uaa
   - githubRelease:

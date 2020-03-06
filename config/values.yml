@@ -31,6 +31,7 @@ images:
   syslog_server: "logcache/syslog-server@sha256:f1f6def4af1261e4cafe4745d5bab8258a2e1ff9fd835c5021e00957ea42d7d4"
   log_cache_gateway: "logcache/log-cache-gateway@sha256:dd639d3c4cbb120cbbd00850b319bc0c60fcc003979f8f8d6f5198ef985e6a8c"
   fluent: "logcache/cf-k8s-logging@sha256:8107d5923e630f792631c21e6c862bc027cc1ae275202ac1be3f9b19f4991698"
+  metric_proxy: "oratos/metric-proxy@sha256:ed78f48c546e134263c69b368fc4e5fe4028d7ab2c6da85df9fe500cc035bb3d"
 
 system_certificate:
   #! Base64-encoded certificate for the wildcard
@@ -135,6 +136,14 @@ log_cache_syslog:
 log_cache_client:
   id: "" #! comment
   secret: "" #! comment
+
+metric_proxy_ca:
+  crt: "" #! Base64-encoded ca for the metric-proxy
+  key: "" #! Base64-encoded private key for the cert above
+
+metric_proxy:
+  crt: "" #! Base64-encoded cert for the metric-proxy requires CN of metric-proxy
+  key: "" #! Base64-encoded private key for the cert above
 
 docker_registry:
   http_secret: "" #! A random piece of data used to sign state that may be stored with the client to protect against tampering. For production environments you should generate a random piece of data using a cryptographically secure random generator.
