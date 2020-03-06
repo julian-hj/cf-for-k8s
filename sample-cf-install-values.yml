@@ -57,15 +57,14 @@ eirini:
     key: *key
 
 metric_proxy:
-  tls:
-    #! This certificate should be valid for metric-proxy.cf-system.svc.cluster.local
+  ca:
+    secret_name: "metric-proxy-ca"
     crt: *crt
     key: *key
-
-metric_proxy_ca:
-  tls:
-    #! The CA for metric-proxy
-    ca: *crt
+  cert:
+    secret_name: "metric-proxy-cert"
+    #! This certificate should be valid for metric-proxy.cf-system.svc.cluster.local
+    crt: *crt
     key: *key
 
 docker_registry:

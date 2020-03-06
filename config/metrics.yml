@@ -11,13 +11,15 @@ system_namespace: #@ data.values.system_namespace
 images:
   metric_proxy: #@ data.values.images.metric_proxy
 
-metric_proxy_ca:
-  crt: #@ data.values.metric_proxy_ca.crt
-  key: #@ data.values.metric_proxy_ca.key
-
 metric_proxy:
-  crt: #@ data.values.metric_proxy.crt
-  key: #@ data.values.metric_proxy.key
+  ca:
+    secret_name: "metric-proxy-ca"
+    crt: #@ data.values.metric_proxy.ca.crt
+    key: #@ data.values.metric_proxy.ca.key
+  cert:
+    secret_name: "metric-proxy-cert"
+    crt: #@ data.values.metric_proxy.cert.crt
+    key: #@ data.values.metric_proxy.cert.key
 #@ end
 
 #@ metrics = library.get("github.com/cloudfoundry/metric-proxy")
